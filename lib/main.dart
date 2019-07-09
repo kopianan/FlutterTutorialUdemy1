@@ -1,23 +1,33 @@
 import 'package:flutter/material.dart';
 
+import './question.dart';
+
+import './answer.dart';
+
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
-
-  var counterIndex = 0 ; 
-
-
-  void pressedButton (){
-    counterIndex = counterIndex + 1 ;
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return MyAppState();
   }
+}
 
+class MyAppState extends State<MyApp> {
+  var counterIndex = 0;
+
+  void pressedButton() {
+    setState(() {
+      counterIndex = counterIndex + 1;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     var arrayQuestions = [
-      "Nama kesuaan saya adalah ? ", 
+      "Nama kesuaan saya adalah ? ",
       "HAHAHAH mau aja dibohongin ? "
-    ]
+    ];
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -25,19 +35,10 @@ class MyApp extends StatelessWidget {
         ),
         body: Column(
           children: <Widget>[
-            Text(arrayQuestions[counterIndex]),
-            RaisedButton(
-              child: Text("Button 1"),
-              onPressed: pressedButton,
-            ),
-              RaisedButton(
-              child: Text("Button 2"),
-              onPressed: pressedButton,
-            ),
-              RaisedButton(
-              child: Text("Button 3"),
-              onPressed: pressedButton,
-            ),
+            Question(arrayQuestions[counterIndex]),
+            Answer(pressedButton, "Button 1"),
+            Answer(pressedButton, "Button 2"),
+            Answer(pressedButton, "Button 3"),
           ],
         ),
       ),
