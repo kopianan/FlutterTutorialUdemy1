@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import './question.dart';
-
-import './answer.dart';
+import './quiz.dart';
+import './result.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,33 +13,61 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-  var counterIndex = 0;
+  var _counterIndex = 0;
+  var _arrayQuestions = [
+    {
+      "questionText": "Warna Kesukaan ? ",
+      "answer": [
+        {"text": "merah", "score": 20},
+        {"text": "Biru", "score": 10},
+        {"text": "merah", "score": 5},
+        {"text": "merah", "score": 30},
+      ]
+    },
+    {
+      "questionText": "Hewan Kesukaan ? ",
+      "answer": [
+        {"text": "kucing", "score": 20},
+        {"text": "merpati", "score": 10},
+        {"text": "semut", "score": 5},
+        {"text": "gajah", "score": 30},
+      ]
+    },
+    {
+      "questionText": "HP Kesukaan  ? ",
+      "answer": [
+        {"text": "xiaomi", "score": 20},
+        {"text": "nokia", "score": 10},
+        {"text": "sony", "score": 5},
+        {"text": "samsung", "score": 30},
+      ]
+    },
+  ];
 
-  void pressedButton() {
+  var _totalScore = 0 ; 
+
+  void _pressedButton(int score ) {
+    _totalScore += score ; 
+
     setState(() {
-      counterIndex = counterIndex + 1;
+      _counterIndex = _counterIndex + 1;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    var arrayQuestions = [
-      "Nama kesuaan saya adalah ? ",
-      "HAHAHAH mau aja dibohongin ? "
-    ];
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text("Judul"),
         ),
-        body: Column(
-          children: <Widget>[
-            Question(arrayQuestions[counterIndex]),
-            Answer(pressedButton, "Button 1"),
-            Answer(pressedButton, "Button 2"),
-            Answer(pressedButton, "Button 3"),
-          ],
-        ),
+        body: _counterIndex < _arrayQuestions.length
+            ? Quiz(
+                questionArray: _arrayQuestions,
+                clickButton: _pressedButton,
+                index: _counterIndex,
+              )
+            : Result(sumScore: _totalScore,),
       ),
     );
   }
