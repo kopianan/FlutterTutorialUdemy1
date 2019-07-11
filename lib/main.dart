@@ -44,13 +44,21 @@ class MyAppState extends State<MyApp> {
     },
   ];
 
-  var _totalScore = 0 ; 
+  var _totalScore = 0;
 
-  void _pressedButton(int score ) {
-    _totalScore += score ; 
+  void _pressedButton(int score) {
+    _totalScore += score;
 
     setState(() {
       _counterIndex = _counterIndex + 1;
+    });
+  }
+
+  void _resetQuiz() {
+   
+    setState(() {
+      _counterIndex = 0;
+      _totalScore = 0;
     });
   }
 
@@ -67,7 +75,7 @@ class MyAppState extends State<MyApp> {
                 clickButton: _pressedButton,
                 index: _counterIndex,
               )
-            : Result(sumScore: _totalScore,),
+            : Result(_totalScore, _resetQuiz),
       ),
     );
   }
